@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather API</title>
+    <style>
+        body {
+            background-image: url('weather bg.jpg');
+            background-size: cover;
+        }
+
+        form {
+            display: flex;
+        }
+
+        .main {
+            height: 500px;
+            width: 300px;
+            background-image: linear-gradient(rgb(86, 59, 204), rgb(217, 63, 255));
+            border: 3px solid black;
+            border-radius: 20px;
+            color: white;
+            margin-left: 20px;
+            display: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .menu{
+            height: 50px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            justify-content: space-between;
+        }
+
+        .menu>p{
+            padding-left: 10px;
+        }
+        
+        .menu2{
+            height: 30px;
+            width: 100px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .img{
+            height: 300px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content{
+            height: 150px;
+            width: 100%;
+        }
+
+        .content > h1{
+            margin-left: 30px;
+            
+        }
+
+        .content > h3{
+            margin-left: 30px;
+        }
+
+        #city {
+            height: 30px;
+            width: 300px;
+            border-radius: 40px;
+            border: 3px solid rgb(255, 196, 0);
+        }
+
+        #ok {
+            height: 40px;
+            width: 100px;
+            border-radius: 40px;
+            margin-top: 1.5%;
+            margin-left: 1%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            background-color: rgb(58, 58, 179);
+            box-shadow: 2px 2px 8px gray;
+            color: white;
+            border: none;
+        }
+
+      
+    </style>
+
+<body>
+    <form>
+        <h2>Enter city Name : <input type="text" id="city"></h2>
+        <input type="submit" id="ok">
+    </form>
+
+        <div class="main" id="test">
+            <div class="menu">
+           <p>19:05</p>
+            <div class="menu2">
+                  <i class="fa-solid fa-wifi"></i>
+                  <i class="fa-solid fa-tower-broadcast"></i>
+                  <i class="fa-solid fa-battery-full"></i>
+            </div>
+            </div>
+
+            <div class="img">
+                 <img src="weather logo.png" height="80%" width="80%">
+            </div>
+
+               <div class="content">
+                 <h1 id="h1">'s temperature is</h1>
+                 <h3 id="h3">deg.</h3>
+             </div>
+         </div>
+
+
+
+    <script>
+
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+
+            const weather = async () => {
+                try {
+                    let api = 'e84708478b907de9b37a719bd13e7302';
+
+                    let cityName = document.getElementById('city').value;
+                    console.log(cityName);
+
+                    let result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api}&units=metric`);
+
+                    let response = await result.json();
+                    console.log(response);
+
+                    let h1 = document.getElementById("h1");
+                    let main = document.getElementById("test");
+                    let h3=document.getElementById("h3");
+
+                   
+                    main.style.display = 'block'
+                    h1.textContent = cityName;
+                    h3.innerText = response.main.temp + " deg";
+                }
+
+                catch (err) {
+                    console.log(err)
+                }
+            }
+            weather();
+        })
+    </script>
+</body>
+
+
+</html>
